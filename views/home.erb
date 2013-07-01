@@ -1,1 +1,35 @@
-<%= @data.inspect %>
+<%# @data.inspect %>
+<% data = @data.sort{|st1, st2| st1["name"]<=>st2["name"]} %>
+<h2>New York Citibike Stations</h2>
+
+<div class="row-fluid">
+  <div class="span3 ">
+    <ul>
+    <% data.each do |station| %>
+      <li>
+        <strong> <%= station["name"] %> </strong>
+        <ul>
+          <li><%= "+#{station["lat"] / 1.0e6}#{station["lng"] / 1.0e6}" %></li>
+        </ul>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="span9 ">
+    <div id="map"></div>
+    <script type="text/javascript" charset="utf-8">
+      var map = L.map('map').setView([40.73, -74.00], 13);
+      L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.png', {attribution: 'Stamen Terrain'}, {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+      }).addTo(map);
+
+      <% @data.each do |station| %>
+        L.marker(<%= [station["lat"] / 1.0e6, station["lng"] / 1.0e6] %>).addTo(map).bindPopup('<%= station["name"]%>');
+      <% end %>
+
+    </script>
+  </div>
+
+</div>

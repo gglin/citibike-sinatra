@@ -1,9 +1,23 @@
-<h1>MAP!</h1>
-<div id="map"></div>
-<script type="text/javascript" charset="utf-8">
-  var map = L.map('map').setView([40.7142, -74.0064], 13);
-  L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {attribution: 'Stamen Toner'}, {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-    maxZoom: 18
-  }).addTo(map);
-</script>
+<!-- <h1>MAP!</h1> -->
+<div class="span12 offset1">
+  <%= @abc %>
+  <ul>
+    <li>Start: <strong><%= @start_name.to_s %></strong></li>
+    <li>End:   <strong><%= @end_name.to_s %></strong></li>
+  </ul>
+
+  <div id="map"></div>
+  <script type="text/javascript" charset="utf-8">
+    var map = L.map('map').setView(<%= @mid %>, 13);
+    L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.png', {attribution: 'Stamen Terrain'}, {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+      maxZoom: 18
+    }).addTo(map);
+
+    L.marker(<%= @start %>).addTo(map).bindPopup('<b>Start</b>: <br> <%= @start_name.to_s %>');
+    L.marker(<%= @end %>).addTo(map).bindPopup('<b>End</b>: <br> <%= @end_name.to_s %>');
+
+    L.polygon([<%= @start %>, <%= @end %>]).addTo(map);
+  </script>
+  <br>
+</div>

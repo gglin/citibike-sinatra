@@ -1,0 +1,30 @@
+<% data = @data.sort{|st1, st2| st1["name"]<=>st2["name"]} %>
+
+<div class="row">
+
+
+  <div class="span8 offset2">
+    <h3>Map my route!</h3>
+
+    <form action="/map" method="POST" class="form-inline">
+
+      <label for="start">Start:</label>
+      <select name="start" id="start">
+        <% data.each do |station| %>
+          <option value='<%= [station["lat"], station["lng"], station["name"]] %>'><%= station["name"] %></option>
+        <% end %>
+      </select>
+
+      <label for="end">End:</label>
+      <select name="end" id="end">
+        <% data.each do |station| %>
+          <option value='<%= [station["lat"], station["lng"], station["name"]] %>'><%= station["name"] %></option>
+        <% end %>
+      </select>
+      
+      <button type="submit" class="btn">Map Route</button>
+
+    </form>
+  </div>
+
+</div>
