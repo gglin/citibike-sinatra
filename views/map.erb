@@ -1,8 +1,9 @@
-<!-- <h1>MAP!</h1> -->
+<!-- Map -->
+
 <div class="span12 offset1">
   <ul>
-    <li>Start: <strong><%= @start_name.to_s %></strong></li>
-    <li>End:   <strong><%= @end_name.to_s %></strong></li>
+    <li>Start: <a href="/stations/<%= @start_id %>"><strong><%= @start_name.to_s %></strong></a></li>
+    <li>End:   <a href="/stations/<%= @end_id   %>"><strong><%= @end_name.to_s   %></strong></a></li>
   </ul>
 
   <div id="map"></div>
@@ -13,8 +14,11 @@
       maxZoom: 18
     }).addTo(map);
 
-    L.marker(<%= @start %>).addTo(map).bindPopup('<b>Start</b>: <br> <%= @start_name.to_s %>');
-    L.marker(<%= @end %>).addTo(map).bindPopup('<b>End</b>: <br> <%= @end_name.to_s %>');
+    map.touchZoom.disable();
+    map.scrollWheelZoom.disable();
+
+    L.marker(<%= @start %>).addTo(map).bindPopup('<b>Start</b>: <br> <a href="/stations/<%= @start_id %>"><%= @start_name.to_s %></a>');
+    L.marker(<%= @end   %>).addTo(map).bindPopup('<b>End</b>:   <br> <a href="/stations/<%= @end_id   %>"><%= @end_name.to_s %></a>');
 
     L.polygon([
           <%= @start %>, 

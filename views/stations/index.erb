@@ -1,20 +1,21 @@
-<%# @stations.inspect %>
-<% stations = @stations.sort{|st1, st2| st1["stationName"]<=>st2["stationName"]} %>
-<% num_st  = stations.size %>
-<% halfway = stations.size / 2 %>
-<% stations1 = stations[0..halfway] %>
-<% stations2 = stations[(halfway+1)..(num_st-1)] %>
+<!-- List Stations -->
 
-<h2>New York Citibike Stations</h2>
+<% stations = @stations.sort{|st1, st2| st1["stationName"]<=>st2["stationName"]} %>
+<% halfway  = @num_st / 2 %>
+<% stations1 = stations[0...halfway] %>
+<% stations2 = stations[halfway..-1] %>
+
+<h3>New York Citibike Stations</h3>
+<h4>Number of stations: <%= @num_st %> </h4>
 
 <div class="row-fluid">
 
   <div class="span3 ">
     <% stations1.each do |station| %>
       <div class="station">
-        <strong><a href="/stations/<%= station[:id] %>">      <%= station[:stationName] %></a></strong>
+        <strong><a href="/stations/<%= station[:id] %>"><%= station[:stationName] %></a></strong>
         <span class="admin">
-          | <a href="/stations/edit/<%= station[:id] %>">  Edit</a>
+          | <a href="/stations/edit/<%=   station[:id] %>">  Edit</a>
           | <a href="/stations/delete/<%= station[:id] %>">Delete</a>
         </span>
       </div>
@@ -24,9 +25,9 @@
   <div class="span3 ">
     <% stations2.each do |station| %>
       <div class="station">
-        <strong><a href="/stations/<%= station[:id] %>">      <%= station[:stationName] %></a></strong>
+        <strong><a href="/stations/<%= station[:id] %>"><%= station[:stationName] %></a></strong>
         <span class="admin">
-          | <a href="/stations/edit/<%= station[:id] %>">  Edit</a>
+          | <a href="/stations/edit/<%=   station[:id] %>">  Edit</a>
           | <a href="/stations/delete/<%= station[:id] %>">Delete</a>
         </span>
       </div>
@@ -42,8 +43,13 @@
         maxZoom: 18
       }).addTo(map);
 
+      map.touchZoom.disable();
+      map.scrollWheelZoom.disable();
+
       <% @stations.each do |station| %>
-        L.marker(<%= [station["latitude"], station["longitude"]] %>).addTo(map).bindPopup('<%= station["stationName"]%>');
+        L.marker(<%= [station["latitude"], station["longitude"]] %>).addTo(map).bindPopup(
+          '<strong><a href="/stations/<%= station[:id] %>"><%= station[:stationName] %></a></strong> <br> <a href="/stations/edit/<%= station[:id] %>">  Edit</a> | <a href="/stations/delete/<%= station[:id] %>">Delete</a> '
+        );
       <% end %>
 
     </script>

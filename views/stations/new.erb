@@ -1,0 +1,35 @@
+<!-- New Station -->
+
+<form action="/stations" method="POST">
+
+  <h3>Create A New Station</h3>
+  <hr>
+  <fieldset>
+
+    <label>Station Name: </label> <input type="text" name="station[stationName]" value="<%=@station.stationName%>"/>
+    <label>Total Docks:  </label> <input type="text" name="station[totalDocks]"  value="<%=@station.totalDocks%>"/> 
+    <label>Latitude:     </label> <input type="text" name="station[latitude]"    value="<%=@station.latitude%>"/>   
+    <label>Longitude:    </label> <input type="text" name="station[longitude]"   value="<%=@station.longitude%>"/>  
+    <label>Address 1:    </label> <input type="text" name="station[stAddress1]"  value="<%=@station.stAddress1%>"/> 
+    <label>Address 2:    </label> <input type="text" name="station[stAddress2]"  value="<%=@station.stAddress2%>"/> 
+
+  </fieldset>
+  <input type="submit" value="Create" class="btn btn-success"> or <a href="/stations">Cancel</a>
+
+</form>
+
+<!-- 
+station[availableBikes]
+station[availableDocks]
+
+station[statusValue]
+station[statusKey]
+
+station[city]
+station[postalCode]
+station[location]
+station[altitude]
+station[testStation]
+station[lastCommunicationTime]
+station[landMark]
+ -->

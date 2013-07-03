@@ -1,0 +1,52 @@
+<h3><%= @station[:stationName] %></h3>
+
+<div class="row-fluid">
+
+  <div class="span4 ">
+      <a href="/stations/edit/<%=   @station[:id] %>">  Edit</a>
+    | <a href="/stations/delete/<%= @station[:id] %>">Delete</a>
+    <hr>
+    
+    <p> <b>Total Docks:      </b><%= @station.totalDocks            %>
+    <br><b>Available Bikes:  </b><%= @station.availableBikes        %>
+    <br><b>Available Docks:  </b><%= @station.availableDocks        %></p>
+    
+    <p> <b>Latitude:         </b><%= @station.latitude              %>
+    <br><b>Longitude:        </b><%= @station.longitude             %></p>
+    
+    <p> <b>Address 1:        </b><%= @station.stAddress1            %>
+    <br><b>Address 2:        </b><%= @station.stAddress2            %></p>
+    
+    <p> <b>City:             </b><%= @station.city                  %>
+    <br><b>ZIP:              </b><%= @station.postalCode            %>
+    <br><b>Location:         </b><%= @station.location              %>
+    <br><b>Altitude:         </b><%= @station.altitude              %></p>
+    
+    <p> <b>Status Value:     </b><%= @station.statusValue           %>
+    <br><b>Status Key:       </b><%= @station.statusKey             %>
+    <br><b>Test Station:     </b><%= @station.testStation           %>
+    <br><b>Last Com Time:    </b><%= @station.lastCommunicationTime %>
+    <br><b>Landmark:         </b><%= @station.landMark              %></p>
+
+  </div>
+
+  <div class="span8 ">
+    <div id="map"></div>
+    <script type="text/javascript" charset="utf-8">
+      var map = L.map('map').setView(<%= [@station["latitude"], @station["longitude"]] %>, 16);
+      L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.png', {attribution: 'Stamen Terrain'}, {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+      }).addTo(map);
+
+      map.touchZoom.disable();
+      map.scrollWheelZoom.disable();
+
+      L.marker(<%= [@station["latitude"], @station["longitude"]] %>).addTo(map).bindPopup(
+        '<strong><%= @station[:stationName] %></strong> <br> <a href="/stations/edit/<%= @station[:id] %>">  Edit</a> | <a href="/stations/delete/<%= @station[:id] %>">Delete</a> '
+      );
+
+    </script>
+  </div>
+
+</div>

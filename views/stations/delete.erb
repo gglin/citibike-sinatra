@@ -1,4 +1,6 @@
+<!-- Delete Station -->
+
 <h3> Are you sure you want to delete <%= @station[:stationName] %>? </h3>
 <form action="/stations/<%= @station[:id] %>" method="POST">
-  <input type="hidden" name="_method" value="DELETE">
-  <input type="submit" value="Delete"> or <a href="/stations">Cancel</a>
+  <input type="hidden" name="_method" value="DELETE" >
+  <input type="submit" value="Delete" class="btn btn-danger"> or <a href="/stations">Cancel</a>

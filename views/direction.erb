@@ -1,29 +1,31 @@
+<!-- Directions -->
+
 <% stations = @stations.sort{|st1, st2| st1["stationName"]<=>st2["stationName"]} %>
 
 <div class="row">
 
 
   <div class="span8 offset2">
-    <h3>Map my route!</h3>
+    <h3>Map route between two stations:</h3>
 
     <form action="/map" method="POST" class="form-inline">
 
       <label for="start">Start:</label>
       <select name="start" id="start">
         <% stations.each do |station| %>
-          <option value='<%= [ (station["latitude"]), (station["longitude"]), station["stationName"]] %>'><%= station["stationName"] %></option>
+          <option value='<%= [ (station["latitude"]), (station["longitude"]), station["stationName"], station["id"]] %>'><%= station["stationName"] %></option>
         <% end %>
       </select>
 
       <label for="end">End:</label>
       <select name="end" id="end">
         <% stations.each do |station| %>
-          <option value='<%= [ (station["latitude"]), (station["longitude"]), station["stationName"]] %>'><%= station["stationName"] %></option>
+          <option value='<%= [ (station["latitude"]), (station["longitude"]), station["stationName"], station["id"]] %>'><%= station["stationName"] %></option>
         <% end %>
       </select>
       
       <!-- <button type="submit" class="btn">Map Route</button> -->
-      <input type="submit" value="Map Route" class="btn">
+      <input type="submit" value="Map Route" class="btn btn-primary">
 
     </form>
   </div>

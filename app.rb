@@ -12,21 +12,25 @@ require './environment'
 
 
 DataMapper.setup(:default, "sqlite://#{Dir.pwd}/db/stations.db")
-DataMapper::Model.raise_on_save_failure = true
+# DataMapper::Model.raise_on_save_failure = true
 
 module Citibike
 	class App < Sinatra::Application
 
     before do
       @stations = Station.all
+      @num_st = Station.count
     end
 
     get '/' do
       erb :home
     end
 
-    get '/form' do
-      erb :form
+
+    # Directions
+    
+    get '/direction' do
+      erb :direction
     end
 
     get '/map' do
@@ -40,16 +44,24 @@ module Citibike
       @mid  = [ (@start[0]+@end[0])/2, (@start[1]+@end[1])/2 ]
 
       @start_name = params[:start][1..-2].split(", ")[2][1..-2]
-      @end_name   = params[:end][1..-2].split(", ")[2][1..-2]
+      @end_name   =   params[:end][1..-2].split(", ")[2][1..-2]
+
+      @start_id = params[:start][1..-2].split(", ")[3]
+      @end_id   =   params[:end][1..-2].split(", ")[3]
+
       erb :'map'
     end
 
 
+    # Index Stations
 
     get '/stations' do
       @stations = Station.all
       erb :'stations/index'
     end
+
+
+    # Create Station
 
     get '/stations/new' do
       @station = Station.new
@@ -57,22 +69,25 @@ module Citibike
     end
 
     post '/stations' do
-    @station = Station.new(params[:station])
-    if @station.save
-      status 201
-      redirect '/stations/' + @station.id.to_s
-    else
-      status 404
-      erb :'stations/new'
+      puts "this should output"
+      @station = Station.new(params[:station])
+      if @station.save
+        status 201
+        puts @station.id
+        redirect '/stations/' + @station.id.to_s
+      else
+        status 404
+        erb :'stations/new'
       end
     end
 
+
+    # Update Station
 
     get '/stations/edit/:id' do
       @station = Station.get(params[:id])
       erb :'stations/edit'
     end
-
 
     put '/stations/:id' do
       @station = Station.get(params[:id])
@@ -85,17 +100,20 @@ module Citibike
     end
 
 
+    # Destroy Station
+
     get '/stations/delete/:id' do 
       @station = Station.get(params[:id])
       erb :'stations/delete'
     end
-
 
     delete '/stations/:id' do
       Station.get(params[:id]).destroy
       redirect '/stations'
     end
 
+
+    # Read Station
 
     get '/stations/:id' do
       @station = Station.get(params[:id])
@@ -106,6 +124,25 @@ module Citibike
     helpers do
       def partial(view)
         erb view, :layout => false
+      end
+
+      def adv_partial(template,locals=nil)
+        if template.is_a?(String) || template.is_a?(Symbol)
+          template=('_' + template.to_s).to_sym
+        else
+          locals=template
+          template=template.is_a?(Array) ? ('_' + template.first.class.to_s.downcase).to_sym : ('_' + template.class.to_s.downcase).to_sym
+        end
+        if locals.is_a?(Hash)
+          erb(template,{:layout => false},locals)      
+        elsif locals
+          locals=[locals] unless locals.respond_to?(:inject)
+          locals.inject([]) do |output,element|
+            output <<     erb(template,{:layout=>false},{template.to_s.delete("_").to_sym => element})
+          end.join("\n")
+        else 
+          erb(template,{:layout => false})
+        end
       end
     end
 

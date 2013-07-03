@@ -1,35 +1,44 @@
+<!-- Edit Station -->
+<h3>Edit Station</h3>
 
-<form action="/stations/<%= @station.id %>" method="POST">
-  <input type="hidden" name="_method" value="PUT"> 
-  <h1>Edit Station</h1>
-  <hr>
-  <fieldset>
+<div class="row-fluid">
 
-  <p><label>Station Name: </label> <input type="text" name="station[stationName]" value="<%=@station.stationName%>"/></p>
-  <p><label>Total Docks:  </label> <input type="text" name="station[totalDocks]"  value="<%=@station.totalDocks%>"/> </p>
-  <p><label>Latitude:     </label> <input type="text" name="station[latitude]"    value="<%=@station.latitude%>"/>   </p>
-  <p><label>Longitude:    </label> <input type="text" name="station[longitude]"   value="<%=@station.longitude%>"/>  </p>
-  <p><label>Address 1:    </label> <input type="text" name="station[stAddress1]"  value="<%=@station.stAddress1%>"/> </p>
-  <p><label>Address 2:    </label> <input type="text" name="station[stAddress2]"  value="<%=@station.stAddress2%>"/> </p>]
-  
-  </fieldset>
-  <input type="submit" value="Create" class="btn"> or <a href="/stations">Cancel</a>
+  <div class="span4 ">
+    <form action="/stations/<%= @station.id %>" method="POST">
+      <input type="hidden" name="_method" value="PUT"> 
+      <hr>
+      <fieldset>
 
-</form>
+        <label>Station Name: </label> <input type="text" name="station[stationName]" value="<%=@station.stationName%>"/>
+        <label>Total Docks:  </label> <input type="text" name="station[totalDocks]"  value="<%=@station.totalDocks%>"/> 
+        <label>Latitude:     </label> <input type="text" name="station[latitude]"    value="<%=@station.latitude%>"/>   
+        <label>Longitude:    </label> <input type="text" name="station[longitude]"   value="<%=@station.longitude%>"/>  
+        <label>Address 1:    </label> <input type="text" name="station[stAddress1]"  value="<%=@station.stAddress1%>"/> 
+        <label>Address 2:    </label> <input type="text" name="station[stAddress2]"  value="<%=@station.stAddress2%>"/> 
 
-<!-- 
+      </fieldset>
+      <input type="submit" value="Update" class="btn btn-info"> or <a href="/stations/<%= @station.id %>">Cancel</a>
 
-station[availableBikes]
-station[availableDocks]
+    </form>
+  </div>
 
-station[statusValue]
-station[statusKey]
+  <div class="span8 ">
+    <div id="map"></div>
+    <script type="text/javascript" charset="utf-8">
+      var map = L.map('map').setView(<%= [@station["latitude"], @station["longitude"]] %>, 16);
+      L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.png', {attribution: 'Stamen Terrain'}, {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 18
+      }).addTo(map);
 
-station[city]
-station[postalCode]
-station[location]
-station[altitude]
-station[testStation]
-station[lastCommunicationTime]
-station[landMark]
- -->
+      map.touchZoom.disable();
+      map.scrollWheelZoom.disable();
+
+      L.marker(<%= [@station["latitude"], @station["longitude"]] %>).addTo(map).bindPopup(
+        '<strong><%= @station[:stationName] %></strong> <br> <a href="/stations/edit/<%= @station[:id] %>">  Edit</a> | <a href="/stations/delete/<%= @station[:id] %>">Delete</a> '
+      );
+
+    </script>
+  </div>
+
+</div>
