@@ -1,15 +1,15 @@
-<%# @data.inspect %>
-<% data = @data.sort{|st1, st2| st1["name"]<=>st2["name"]} %>
+<%# @stations.inspect %>
+<% stations = @stations.sort{|st1, st2| st1["stationName"]<=>st2["stationName"]} %>
 <h2>New York Citibike Stations</h2>
 
 <div class="row-fluid">
   <div class="span3 ">
     <ul>
-    <% data.each do |station| %>
+    <% stations.each do |station| %>
       <li>
-        <strong> <%= station["name"] %> </strong>
+        <strong> <%= station["stationName"] %> </strong>
         <ul>
-          <li><%= "+#{station["lat"] / 1.0e6}#{station["lng"] / 1.0e6}" %></li>
+          <li><%= "+#{station["latitude"]}#{station["longitude"]}" %></li>
         </ul>
       </li>
     <% end %>
@@ -25,8 +25,8 @@
         maxZoom: 18
       }).addTo(map);
 
-      <% @data.each do |station| %>
-        L.marker(<%= [station["lat"] / 1.0e6, station["lng"] / 1.0e6] %>).addTo(map).bindPopup('<%= station["name"]%>');
+      <% @stations.each do |station| %>
+        L.marker(<%= [station["latitude"], station["longitude"]] %>).addTo(map).bindPopup('<%= station["stationName"]%>');
       <% end %>
 
     </script>

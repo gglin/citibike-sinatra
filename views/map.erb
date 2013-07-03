@@ -1,6 +1,5 @@
 <!-- <h1>MAP!</h1> -->
 <div class="span12 offset1">
-  <%= @abc %>
   <ul>
     <li>Start: <strong><%= @start_name.to_s %></strong></li>
     <li>End:   <strong><%= @end_name.to_s %></strong></li>
@@ -17,7 +16,10 @@
     L.marker(<%= @start %>).addTo(map).bindPopup('<b>Start</b>: <br> <%= @start_name.to_s %>');
     L.marker(<%= @end %>).addTo(map).bindPopup('<b>End</b>: <br> <%= @end_name.to_s %>');
 
-    L.polygon([<%= @start %>, <%= @end %>]).addTo(map);
+    L.polygon([
+          <%= @start %>, 
+          <%= @end %>
+              ]).addTo(map);
   </script>
   <br>
 </div>

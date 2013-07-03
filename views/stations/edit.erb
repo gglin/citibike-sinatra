@@ -1,0 +1,35 @@
+
+<form action="/stations/<%= @station.id %>" method="POST">
+  <input type="hidden" name="_method" value="PUT"> 
+  <h1>Edit Station</h1>
+  <hr>
+  <fieldset>
+
+  <p><label>Station Name: </label> <input type="text" name="station[stationName]" value="<%=@station.stationName%>"/></p>
+  <p><label>Total Docks:  </label> <input type="text" name="station[totalDocks]"  value="<%=@station.totalDocks%>"/> </p>
+  <p><label>Latitude:     </label> <input type="text" name="station[latitude]"    value="<%=@station.latitude%>"/>   </p>
+  <p><label>Longitude:    </label> <input type="text" name="station[longitude]"   value="<%=@station.longitude%>"/>  </p>
+  <p><label>Address 1:    </label> <input type="text" name="station[stAddress1]"  value="<%=@station.stAddress1%>"/> </p>
+  <p><label>Address 2:    </label> <input type="text" name="station[stAddress2]"  value="<%=@station.stAddress2%>"/> </p>]
+  
+  </fieldset>
+  <input type="submit" value="Create" class="btn"> or <a href="/stations">Cancel</a>
+
+</form>
+
+<!-- 
+
+station[availableBikes]
+station[availableDocks]
+
+station[statusValue]
+station[statusKey]
+
+station[city]
+station[postalCode]
+station[location]
+station[altitude]
+station[testStation]
+station[lastCommunicationTime]
+station[landMark]
+ -->

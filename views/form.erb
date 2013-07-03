@@ -1,4 +1,4 @@
-<% data = @data.sort{|st1, st2| st1["name"]<=>st2["name"]} %>
+<% stations = @stations.sort{|st1, st2| st1["stationName"]<=>st2["stationName"]} %>
 
 <div class="row">
 
@@ -10,19 +10,20 @@
 
       <label for="start">Start:</label>
       <select name="start" id="start">
-        <% data.each do |station| %>
-          <option value='<%= [station["lat"], station["lng"], station["name"]] %>'><%= station["name"] %></option>
+        <% stations.each do |station| %>
+          <option value='<%= [ (station["latitude"]), (station["longitude"]), station["stationName"]] %>'><%= station["stationName"] %></option>
         <% end %>
       </select>
 
       <label for="end">End:</label>
       <select name="end" id="end">
-        <% data.each do |station| %>
-          <option value='<%= [station["lat"], station["lng"], station["name"]] %>'><%= station["name"] %></option>
+        <% stations.each do |station| %>
+          <option value='<%= [ (station["latitude"]), (station["longitude"]), station["stationName"]] %>'><%= station["stationName"] %></option>
         <% end %>
       </select>
       
-      <button type="submit" class="btn">Map Route</button>
+      <!-- <button type="submit" class="btn">Map Route</button> -->
+      <input type="submit" value="Map Route" class="btn">
 
     </form>
   </div>

@@ -1,2 +1,18 @@
 /*for leaflet map*/
-#map { height: 500px; }
+#map { 
+  height: 450px; 
+}
+
+.fix-map {
+  position: fixed;
+  right: 2%;
+  top: 10%;
+}
+
+.station .admin {
+  display: none;
+}
+
+.station:hover .admin {
+  display: inline;
+}
