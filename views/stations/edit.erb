@@ -9,12 +9,7 @@
       <hr>
       <fieldset>
 
-        <label>Station Name: </label> <input type="text" name="station[stationName]" value="<%=@station.stationName%>"/>
-        <label>Total Docks:  </label> <input type="text" name="station[totalDocks]"  value="<%=@station.totalDocks%>"/> 
-        <label>Latitude:     </label> <input type="text" name="station[latitude]"    value="<%=@station.latitude%>"/>   
-        <label>Longitude:    </label> <input type="text" name="station[longitude]"   value="<%=@station.longitude%>"/>  
-        <label>Address 1:    </label> <input type="text" name="station[stAddress1]"  value="<%=@station.stAddress1%>"/> 
-        <label>Address 2:    </label> <input type="text" name="station[stAddress2]"  value="<%=@station.stAddress2%>"/> 
+        <%= adv_partial :form, @station %>
 
       </fieldset>
       <input type="submit" value="Update" class="btn btn-info"> or <a href="/stations/<%= @station.id %>">Cancel</a>
