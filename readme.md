@@ -138,3 +138,82 @@ using that knowledge
 
 you now have something that looks like this:
 ![complete](http://content.screencast.com/users/ag_dubs/folders/Jing/media/ae7835ad-ddd7-425a-84d3-1e18bb693d1e/00000051.png)
+
+
+
+
+
+# citibike REST
+
+FIRST, read [this](http://ididitmyway.herokuapp.com/past/2010/9/21/restful_rabbits/).
+... if you want to dig deep, this [tutorial](http://www.restapitutorial.com/) is also worthwhile.
+
+Following the example laid out in the reading, create a RESTful resource for the citibike stations. 
+
+## Resources
+- https://github.com/aviflombaum/playlister-rb
+- http://datamapper.org/docs/
+- http://citibikenyc.com/stations/json
+- http://ididitmyway.herokuapp.com/past/2010/5/31/partials/
+- http://ididitmyway.herokuapp.com/past/2010/9/21/restful_rabbits/
+- http://www.restapitutorial.com/
+- http://leafletjs.com/
+
+## Instructions
+
+### Create a RESTful resource
+1. Create a Datamapper model for a station in a file called `station.rb`. This model should include all the details that are available in the JSON file. Here is an example of a station in the data:
+
+```json
+  {   "id":72,
+      "stationName":"W 52 St & 11 Ave",
+      "availableDocks":37,
+      "totalDocks":39,
+      "latitude":40.76727216,
+      "longitude":-73.99392888,
+      "statusValue":"In Service",
+      "statusKey":1,
+      "availableBikes":1,
+      "stAddress1":"W 52 St & 11 Ave",
+      "stAddress2":"",
+      "city":"",
+      "postalCode":"",
+      "location":"",
+      "altitude":"",
+      "testStation":false,
+      "lastCommunicationTime":null,
+      "landMark":""
+  }
+```
+
+3. Now, following the example laid out in the reading create a complete set of routes for the station resource.
+`/stations/`, `/stations/1`, `/stations/new`, `/stations/edit/1`, `/stations/delete/1`
+
+### JSON -> SQL
+
+4. Update your app to now pull the data from the API endpoint, [http://citibikenyc.com/stations/json](http://citibikenyc.com/stations/json), instead of the static JSON file.
+5. Refactor your app to load the data in `config.ru` like you did during the Playlister lab. To do this, you'll need to create a model to load the data that takes the path as a parameter to its `initialize` method, and will load the data into the database during it's `call` method. 
+
+If you feel lost, follow the patterns you used [here](https://github.com/aviflombaum/playlister-rb/blob/sinatra-app/config.sinatra.ru) and [here](https://github.com/aviflombaum/playlister-rb/blob/sinatra-app/lib/models/library_parser.rb).
+
+### Views, with Partials!
+5. Build out all the views you need. In the reading the views are written in [HAML](http://haml.info/). You can learn about  [HAML](http://haml.info/) while you translate it into ERB.
+
+The views in the example use partials. In order to use partials, you'll need to add the following code to the bottom of your app.rb file, inside your `Citibike` module and `App` class.
+
+```ruby
+  #app.rb
+  helpers do
+    def partial(view)
+      erb view, :layout => false
+    end
+  end
+```
+
+A helper is just a function. This function takes a view name (usually a symbol) as a parameter, and returns the rendered erb view. You can call this helper in all of your views, e.g. `<%= partial(:index) %>`
+
+If you want to learn more about this, read this [article](http://ididitmyway.herokuapp.com/past/2010/5/31/partials/), or view this [github repo](https://github.com/daz4126/I-Did-It-My-Way-Partials)
+
+### Maps
+6. Create a map using Leaflet that plots all the citibike locations and add it to your list view. 
+7. Create a map on each individual show view that plots the location of the individual station.
